@@ -9,19 +9,20 @@ total_task = jumlah_per_hari * jumlah_hari * 3
 print(f"\n🎯 Target: {total_task} total task (text + image + audio) dalam {jumlah_hari} hari\n")
 
 # === API KEY ===
-TEXT_GROQ_API = "API-KEY-GROQ-TEXT"
-IMAGE_GROQ_API = "API-KEY-GROQ-IMAGE" # SEBENERNYA PAKE 1 API JUGA BISA BIAR GA LIMIT AJA GUA BIKIN 3
-AUDIO_GROQ_API = "API-KEY-GROQ-AUDIO" 
-HYPERBOLIC_API_KEY = "hyperbolic-API"  # Ganti dengan punyamu hyperbolic
-
-task_counter = 1
+TEXT_GROQ_API = "API GROQ TEXT"
+IMAGE_GROQ_API = "API GROQ IMAGE" #SEBENERNYA KAMU BISA PAKE 1 API AJA
+AUDIO_GROQ_API = "API GROQ AUDIO"
+HYPERBOLIC_API_KEY = "API HYPERBOLICNYA"
 
 for day in range(1, jumlah_hari + 1):
+    start_time = time.time()
     print(f"\n📅 Hari ke-{day} ===========================\n")
 
     for i in range(jumlah_per_hari):
+        progress = f"{i+1}/{jumlah_per_hari}"
+
         # === TEXT ===
-        print(f"\n📌 TASK {task_counter} - TEXT")
+        print(f"\n📌 TASK {progress} - TEXT")
         try:
             question = requests.post(
                 "https://api.groq.com/openai/v1/chat/completions",
@@ -62,7 +63,7 @@ for day in range(1, jumlah_hari + 1):
         time.sleep(1)
 
         # === IMAGE ===
-        print(f"\n📌 TASK {task_counter+1} - IMAGE")
+        print(f"\n📌 TASK {progress} - IMAGE")
         try:
             prompt = requests.post(
                 "https://api.groq.com/openai/v1/chat/completions",
@@ -106,7 +107,7 @@ for day in range(1, jumlah_hari + 1):
         time.sleep(1)
 
         # === AUDIO ===
-        print(f"\n📌 TASK {task_counter+2} - AUDIO")
+        print(f"\n📌 TASK {progress} - AUDIO")
         try:
             audio_text = requests.post(
                 "https://api.groq.com/openai/v1/chat/completions",
@@ -138,9 +139,13 @@ for day in range(1, jumlah_hari + 1):
         with open("HISTORIAI.txt", "a", encoding="utf-8") as log:
             log.write(f"\n=== [Hari {day} - AUDIO {i+1}] ===\nStatus: {status}\n{'='*40}\n")
 
-        task_counter += 3
         time.sleep(1)
 
     print(f"\n✅ Selesai hari ke-{day}. Menunggu hari berikutnya...\n")
+
+    # Hitung sisa waktu hingga 1 hari penuh
     if day < jumlah_hari:
-        time.sleep(86400)  # Ganti ke 86400 buat 1 hari penuh
+        elapsed = time.time() - start_time
+        remaining = max(0, 86400 - elapsed)
+        print(f"⏳ Menunggu selama {int(remaining)} detik...\n")
+        time.sleep(remaining)
