@@ -1,33 +1,27 @@
 # Hyperbolic
 Hyperbolic auto bot chat
 
-
 ---
 
 ## 🤖 HISTORIAI — Gabungan AI Text, Image, dan Audio (dengan Logging Otomatis)
 
 Program ini akan menjalankan **AI Text Q&A**, **Image Generation**, dan **Voice Generation** secara bergantian setiap hari, dengan hasil log otomatis disimpan ke dalam file `HISTORIAI.txt`.
 
+---
+
 ### 💡 Fitur
-- 🔁 Menjalankan 3 jenis task (Text, Image, Audio) secara bergantian
-- 📝 Log status (sukses/gagal) untuk setiap task
-- 🔑 Menggunakan API dari Groq & Hyperbolic AI
-- 🔧 Fleksibel: bisa diatur jumlah task per hari & jumlah hari eksekusi
+- 🔁 Menjalankan 3 task AI: Text, Gambar, dan Suara secara bergantian
+- 📝 Log status otomatis ke file `HISTORIAI.txt`
+- 🔑 Menggunakan API dari **Groq** dan **Hyperbolic**
+- 🔧 Jumlah task & hari bisa diatur bebas oleh user
 
 ---
 
-## 📦 Cara Install
+## 📥 Cara Download (Clone Repo)
 
-1. **Pastikan Python 3.9+ sudah terinstal**
-
-Cek dengan:
 ```bash
-python --version
-```
-
-2. **Install library yang dibutuhkan**
-```bash
-pip install requests
+git clone https://github.com/ademulyanaDEV/Hyperbolic.git
+cd Hyperbolic
 ```
 
 ---
@@ -35,20 +29,13 @@ pip install requests
 ## 🔐 Cara Mendapatkan API Key
 
 ### 1. **Groq API Key (untuk TEXT, IMAGE, AUDIO prompt)**
-- Kunjungi: [https://console.groq.com/keys](https://console.groq.com/keys)
-- Klik `+ New Key`, lalu simpan API Key-nya.
-- Kamu butuh **3 key berbeda** (atau pakai yang sama, tapi idealnya 3):
+- Buka: [https://console.groq.com/keys](https://console.groq.com/keys)
+- Klik `+ New Key`, lalu salin API Key-nya
+- Kamu bisa pakai satu key yang sama untuk semua request (text, image, audio)
 
-  | Fungsi     | Simpan Sebagai        |
-  |------------|------------------------|
-  | Text       | `TEXT_GROQ_API`        |
-  | Image Prompt | `IMAGE_GROQ_API`      |
-  | Audio Prompt | `AUDIO_GROQ_API`      |
-
-### 2. **Hyperbolic API Key (untuk generate Image & Audio)**
+### 2. **Hyperbolic API Key (untuk generate gambar dan suara)**
 - Daftar di: [https://hyperbolic.xyz](https://hyperbolic.xyz)
-- Setelah login, buka dashboard dan salin **API Key** milikmu.
-- Simpan di variabel: `HYPERBOLIC_API_KEY`
+- Login, lalu salin API Key dari dashboard
 
 ---
 
@@ -60,11 +47,23 @@ python3 main.py
 py main.py
 ```
 
-Lalu masukkan:
-- Berapa task per hari (misal: `2` → 2 text, 2 image, 2 audio)
-- Berapa hari mau dijalankan (misal: `3`)
+Lalu isi:
+- 🎯 **Berapa task per hari**? (misal: `3`)
+- 📆 **Berapa hari ingin dijalankan**? (misal: `2`)
 
-Log akan tersimpan otomatis di file:
+Program akan otomatis menjalankan:
+- `3` text Q&A
+- `3` image generation
+- `3` voice generation
+
+... per hari, selama `2` hari berturut-turut.
+
+---
+
+## 🗃️ Log Output
+
+Semua status disimpan ke file:
+
 ```
 HISTORIAI.txt
 ```
@@ -75,28 +74,30 @@ Contoh isi log:
 Status: ✅ Sukses
 ========================================
 
-=== [Hari 1 - IMAGE 1] ===
+=== [Hari 1 - IMAGE 2] ===
 Status: ❌ Gagal (403)
 ========================================
 ```
 
 ---
 
-## 🛠 Struktur File
+## 📁 Struktur Folder
 
 ```
-📁 proyek/
-├── main.py         # Main script
-└── HISTORIAI.txt          # File log output
+📁 Hyperbolic/
+├── main.py          # Script utama gabungan
+├── HISTORIAI.txt           # File log hasil task
+└── README.md               # Dokumentasi
 ```
 
 ---
 
-## 🧠 Tips & Catatan
+## 💡 Tips Tambahan
 
-- Jangan lupa jaga limit rate API dari Groq dan Hyperbolic
-- Kalau ingin jeda antar task lebih lama, ubah bagian `time.sleep(x)`
-- Bisa dijalankan di server/VPS untuk otomatisasi berkala
+- Script ini pakai `requests` bawaan Python (tidak perlu install tambahan)
+- Ingin otomatis harian? Jalankan dengan scheduler seperti `cron` (Linux) atau `Task Scheduler` (Windows)
+- Lebih mudah gunakan screen saja
+- Ubah `time.sleep()` jika ingin mempercepat jeda antar task
 
 ---
 
